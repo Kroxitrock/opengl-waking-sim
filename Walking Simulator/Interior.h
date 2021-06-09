@@ -1,12 +1,21 @@
 #pragma once
 #include "ObjectContainer.h"
 #include "Table.h"
+#include "Bench.h"
 #include "Lamp.h"
 
 class Interior : public ObjectContainer
 {
 public:
 	Interior(glm::vec3 position = glm::vec3(0.0f)) : ObjectContainer(position) {
+		GameObject* bench1 = new Bench(glm::vec3(6.5f, 0.0f, 0.0f));
+		GameObject* bench2 = new Bench(glm::vec3(3.5f, 0.0f, 0.0f));
+		GameObject* bench3 = new Bench(glm::vec3(-3.5f, 0.0f, 0.0f));
+		GameObject* bench4 = new Bench(glm::vec3(-6.5f, 0.0f, 0.0f));
+		this->parts.push_back(bench1);
+		this->parts.push_back(bench2);
+		this->parts.push_back(bench3);
+		this->parts.push_back(bench4);
 		tableComposition(5.0f);
 		tableComposition(-5.0f);
 		lampComposition(7.4f);

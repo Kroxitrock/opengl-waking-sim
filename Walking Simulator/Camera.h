@@ -34,6 +34,7 @@ public:
     glm::vec3 Up;
     glm::vec3 Right;
     glm::vec3 WorldUp;
+    float y;
     // euler Angles
     float Yaw;
     float Pitch;
@@ -43,13 +44,14 @@ public:
     float Zoom;
 
     // constructor with vectors
-    Camera(glm::vec3 position = glm::vec3(0.0f, 1.0f, 3.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Zoom(ZOOM)
+    Camera(glm::vec3 position = glm::vec3(0.0f, 1.8f, 3.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Zoom(ZOOM)
     {
         if (!instance) {
             instance = this;
         }
         else throw new std::exception("Instance of camer allready exists!");
         Position = position;
+        y = position.y;
         WorldUp = up;
         Yaw = yaw;
         Pitch = pitch;
@@ -88,6 +90,7 @@ public:
             Position -= Right * velocity;
         if (direction == RIGHT)
             Position += Right * velocity;
+        Position.y = y;
     }
 
     // processes input received from a mouse input system. Expects the offset value in both the x and y direction.
