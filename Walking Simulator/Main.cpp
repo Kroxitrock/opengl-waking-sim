@@ -1,9 +1,9 @@
 #include <glad/glad.h>
 #include <glfw3/glfw3.h>
 
-#include "Shader.h"
 #include "Camera.h"
 #include "Table.h"
+#include "ShaderManager.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -21,10 +21,7 @@ float lastFrame = 0.0f; // Time of last frame
 float lastX = 640, lastY = 360;
 
 GLFWwindow* window;
-std::vector<Shader*> shaders = {};
 std::vector<GameObject*> gameObjects = {};
-
-Camera *mainCamera;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
@@ -55,7 +52,7 @@ int main()
 void gameLoop() {
     while (!glfwWindowShouldClose(window)) {
         calculateDeltaTime();
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         for(GameObject *gameObject : gameObjects) {
@@ -78,7 +75,7 @@ void calculateDeltaTime()
 
 int windowInit()
 {
-    mainCamera = new Camera();
+    new Camera();
 
     // glfw: initialize and configure
     // ------------------------------
@@ -118,22 +115,14 @@ int windowInit()
 
 void loadShaders()
 {
-    Shader *textureShader = new Shader("texture", "./texture_shader.vs", "./texture_shader.fs");
-    shaders.push_back(textureShader);
+    ShaderManager::addShader(new Shader("texture", "./texture_shader.vs", "./texture_shader.fs"));
+    ShaderManager::addShader(new Shader("light", "./texture_lightsource.vs", "./texture_lightsource.fs"));
 }
 
-Shader* getShaderByName(std::string name) {
-    for (Shader* shader : shaders) {
-        if (shader->name == name) {
-            return shader;
-        }
-    }
-    return NULL;
-}
 
 void loadGameObjects()
 {   
-    GameObject* table = new Table(getShaderByName("texture"), mainCamera);
+    GameObject* table = new Table();
 
     gameObjects.push_back(table);
 }
@@ -145,15 +134,21 @@ void processInput(GLFWwindow* window)
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
 
+    if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS) {
+        for (PointLight* light : PointLightManager::getPointLights()) {
+            light->on = !light->on;
+        }
+    }
+
     float cameraSpeed = 2.5f * deltaTime;
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        mainCamera->ProcessKeyboard(FORWARD, deltaTime);
+        Camera::instance->ProcessKeyboard(FORWARD, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        mainCamera->ProcessKeyboard(BACKWARD, deltaTime);
+        Camera::instance->ProcessKeyboard(BACKWARD, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        mainCamera->ProcessKeyboard(LEFT, deltaTime);
+        Camera::instance->ProcessKeyboard(LEFT, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        mainCamera->ProcessKeyboard(RIGHT, deltaTime);
+        Camera::instance->ProcessKeyboard(RIGHT, deltaTime);
 }
 
 bool firstMouse = true;
@@ -171,12 +166,12 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
     lastX = xpos;
     lastY = ypos;
 
-    mainCamera->ProcessMouseMovement(xoffset, yoffset);
+    Camera::instance->ProcessMouseMovement(xoffset, yoffset);
 }
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
-    mainCamera->ProcessMouseScroll(yoffset);
+    Camera::instance->ProcessMouseScroll(yoffset);
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
