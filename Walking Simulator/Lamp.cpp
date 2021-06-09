@@ -85,7 +85,7 @@ Lamp::Lamp(glm::vec3 scaleVec, glm::vec3 rotateVec, float rotateAngle, glm::vec3
 
 
     pointLight = new PointLight({true, transalteVec, glm::vec3(0.05f, 0.05f, 0.05f),
-        glm::vec3(0.8f, 0.8f, 0.8f), glm::vec3(1.0f), 1.0f, 0.22, 0.20});
+        glm::vec3(0.8f, 0.8f, 0.8f), glm::vec3(1.0f), 1.0f, 0.35, 0.44});
 
     PointLightManager::addPointLight(pointLight);
 

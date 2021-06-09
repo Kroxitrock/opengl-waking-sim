@@ -3,6 +3,7 @@
 
 #include "Camera.h"
 #include "Table.h"
+#include "Room.h"
 #include "ShaderManager.h"
 
 #include <glm/glm.hpp>
@@ -122,9 +123,9 @@ void loadShaders()
 
 void loadGameObjects()
 {   
-    GameObject* table = new Table();
+    GameObject* room = new Room();
 
-    gameObjects.push_back(table);
+    gameObjects.push_back(room);
 }
 
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly

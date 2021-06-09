@@ -144,7 +144,6 @@
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Cube.cpp" />
-    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="Lamp.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -156,9 +155,11 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Interior.h" />
     <ClInclude Include="Lamp.h" />
     <ClInclude Include="PointLightManager.h" />
     <ClInclude Include="ObjectContainer.h" />
+    <ClInclude Include="Room.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderManager.h" />
     <ClInclude Include="stb_image.h" />
