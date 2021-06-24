@@ -2,6 +2,7 @@
 #include <glfw3/glfw3.h>
 
 #include "Camera.h"
+#include "Cube.h"
 #include "Table.h"
 #include "Room.h"
 #include "ShaderManager.h"
@@ -130,15 +131,23 @@ void loadGameObjects()
 
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
 // ---------------------------------------------------------------------------------------------------------
+
+bool lightSwitchClicked = false;
 void processInput(GLFWwindow* window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
 
     if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS) {
-        for (PointLight* light : PointLightManager::getPointLights()) {
-            light->on = !light->on;
+        if (!lightSwitchClicked) {
+            for (PointLight* light : PointLightManager::getPointLights()) {
+                light->on = !light->on;
+            }
         }
+        lightSwitchClicked = true;
+    }
+    else {
+        lightSwitchClicked = false;
     }
 
     float cameraSpeed = 2.5f * deltaTime;

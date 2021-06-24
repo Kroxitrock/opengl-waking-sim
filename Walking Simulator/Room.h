@@ -9,17 +9,20 @@ public:
 		Material ceilingMaterial = { "m-011.jpg", 32.0f };
 		Material wallMaterial = { "m-025.jpg", 32.0f };
 
-		GameObject* floor = new Cube(floorMaterial,glm::vec3(15.0f, 0.1f, 15.0f),
+		GameObject* floor = new Cube("floor", floorMaterial,glm::vec3(15.0f, 0.1f, 15.0f),
 			glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, position + glm::vec3(0.0f, -0.5f, 0.0f));
-		GameObject* wall1 = new Cube(wallMaterial,glm::vec3(0.1f, 5.0f, 15.0f),
+		GameObject* wall1 = new Cube("wall1", wallMaterial,glm::vec3(0.1f, 5.0f, 15.0f),
 			glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, position + glm::vec3(-7.5f, 2.0f, 0.0f));
-		GameObject* wall2 = new Cube(wallMaterial,glm::vec3(0.1f, 5.0f, 15.0f),
+		GameObject* wall2 = new Cube("wall2", wallMaterial,glm::vec3(0.1f, 5.0f, 15.0f),
 			glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, position + glm::vec3(7.5f, 2.0f, 0.0f));
-		GameObject* wall3 = new Cube(wallMaterial,glm::vec3(0.1f, 5.0f, 15.0f),
-			glm::vec3(0.0f, 1.0f, 0.0f), 90.0f, position + glm::vec3(0.0f, 2.0f, 7.5f));
-		GameObject* wall4 = new Cube(wallMaterial,glm::vec3(0.1f, 5.0f, 15.0f),
-			glm::vec3(0.0f, 1.0f, 0.0f), 90.0f, position + glm::vec3(0.0f, 2.0f, -7.5f));
-		GameObject* ceiling = new Cube(ceilingMaterial, glm::vec3(15.0f, 0.1f, 15.0f),
+
+		GameObject* wall3 = new Cube("wall3", wallMaterial,glm::vec3(15.0f, 5.0f, 0.1f),
+			glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, position + glm::vec3(0.0f, 2.0f, 7.5f));
+
+		GameObject* wall4 = new Cube("wall4", wallMaterial,glm::vec3(15.0f, 5.0f, 0.1f),
+			glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, position + glm::vec3(0.0f, 2.0f, -7.5f));
+
+		GameObject* ceiling = new Cube("ceiling", ceilingMaterial, glm::vec3(15.0f, 0.1f, 15.0f),
 			glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, position + glm::vec3(0.0f, 4.5f, 0.0f));
 		GameObject* interior = new Interior();
 		

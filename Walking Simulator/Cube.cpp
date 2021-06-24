@@ -58,13 +58,14 @@ unsigned int indices[] = {  // note that we start from 0!
 };
 #pragma endregion
 
-Cube::Cube(Material material, glm::vec3 scaleVec, glm::vec3 rotateVec, float rotateAngle, glm::vec3 transalteVec) {
+Cube::Cube(std::string name, Material material, glm::vec3 scaleVec, glm::vec3 rotateVec, float rotateAngle, glm::vec3 transalteVec) {
     this->shader = ShaderManager::getShaderByName("texture");
     this->material = material;
     this->scaleVec = scaleVec;
     this->rotateVec = rotateVec;
     this->rotateAngle = rotateAngle;
     this->transalteVec = transalteVec;
+    this->name = name;
 
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -141,6 +142,11 @@ void Cube::update() {
     shader->setMat4("view", Camera::instance->GetViewMatrix());
     shader->setMat4("model", model);
 
+
+    if (Camera::instance->CheckCollision(this)) {
+        Camera::instance->colliding = this;
+        std::cout << "Collided " << name << std::endl;
+    }
 
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, 36);
